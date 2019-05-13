@@ -25,11 +25,11 @@ public class HomeServlet extends HttpServlet {
     }
     // обработка запроса, который должен поменять цвет заголовка
     @Override
-    protected void doPost(HttpServletRequest geg, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest reg, HttpServletResponse resp) throws ServletException, IOException {
         // получаем параметр запроса
-        String color = reg.Parameter("color");
+        String color = reg.getParameter("color");
                 //создаём Cookie с данным значением
-                Cookie colorCookie = new Cookie("color," color);
+                Cookie colorCookie = new Cookie("color", color);
                 // кладём в ответ
                 resp.addCookie(colorCookie);
                 // перенаправляем пользователя обратно на страницу home

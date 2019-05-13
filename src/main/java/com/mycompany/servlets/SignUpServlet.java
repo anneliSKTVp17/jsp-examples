@@ -29,24 +29,25 @@ public class SignUpServlet extends HttpServlet {
     private UserRepository usersRepository;
     @Override
     public void init() throws ServletException {
-        this.usersRepository = new UsersRepositoryInMemoryImpl();
+        this.usersRepository = new UserRepositoryInMemoryImpl();
     }
     @Override
-    protected void doGet(HttpServletRequest reg, HttpServletResponse resp) throws ServletException, IOEception {
+    protected void doGet(HttpServletRequest reg, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = usersRepository.findAll();
         reg.setAttribute("usersFromServer", users);
-        RequestDispatcher dispatcher = reg.getServletContex().getRequestDispatcher("/jsp/signUp.jsp");
+        RequestDispatcher dispatcher = reg.getServletContext().getRequestDispatcher("/jsp/signUp.jsp");
         dispatcher.forward(reg, resp);     
     }
     @Override
-    protected void doPost(HttpServletRequest reg, HttpServletResponse resp) throws ServletException, IOExeption {
+    protected void doPost(HttpServletRequest reg, HttpServletResponse resp) throws ServletException, IOException {
         // вытащили данные регистрации
         String name = reg.getParameter("name");
-        String password = reg.getParameter(password);
-        LacalDate birthDate = LocalDate.parse(reg.getParameter("birthDate"));
+        String password = reg.getParameter("password");
+        LocalDate birthDate = LocalDate.parse(reg.getParameter("birthDate"));
         // создали пользователя и сохранили его в хранилище
         User user = new User(name, password, birthDate);
         usersRepository.save(user);
         doGet(reg, resp);
      
+}
 }
